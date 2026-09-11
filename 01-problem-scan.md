@@ -12,18 +12,18 @@
 
 ## Phase 2 — QUICK-ASSESS
 
-### Quick Problem Card #1 — Xanh SM: Phân tích lý do hủy chuyến
+### Quick Problem Card #1 — Xanh SM: Cancellation Intelligence Copilot
 
 | Hạng mục | Nội dung |
 |---|---|
-| Bài toán | Tự động phân loại lý do hủy chuyến từ ghi chú tài xế, chat hỗ trợ và phản hồi khách để đội vận hành tìm nguyên nhân lặp lại. |
+| Bài toán | Đọc ghi chú tự do về các chuyến bị hủy, trích bằng chứng, phân loại nguyên nhân, phát hiện pattern và soạn insight nội bộ cho đội vận hành. |
 | Công ty | Xanh SM (GSM) |
 | Actor | Chuyên viên vận hành chất lượng dịch vụ và quản lý ca. |
-| Workflow hiện tại | 1) Xuất log hủy chuyến cuối ngày → 2) Đọc ghi chú rời rạc → 3) Gán nhãn thủ công → 4) Tổng hợp Excel → 5) Gửi báo cáo cho quản lý. |
-| Bottleneck | Đọc, diễn giải và gán nhãn ghi chú tiếng Việt không đồng nhất; khoảng 3 phút/case. |
-| AI hỗ trợ | LLM tóm tắt, gán một trong các nhãn đã định nghĩa và trích dẫn câu làm bằng chứng; nhân viên duyệt các case độ tin cậy thấp. |
-| Metric | Phân loại ít nhất 90% case đúng; giảm thời gian phân tích từ 3 phút xuống dưới 20 giây/case. |
-| Quick architecture | LLM Feature, kết hợp rule kiểm tra nhãn hợp lệ. |
+| Workflow hiện tại | 1) Xuất log hủy chuyến cuối ngày → 2) Đọc ghi chú rời rạc từ tài xế/CSKH → 3) Tự diễn giải và gán nhãn → 4) Tổng hợp Excel theo khu vực/giờ → 5) Viết báo cáo thủ công cho quản lý. |
+| Bottleneck | Ghi chú tiếng Việt tự do, viết tắt và thiếu ngữ cảnh khiến việc diễn giải, tìm bằng chứng và nhận ra pattern mất khoảng 3 phút/case. |
+| AI hỗ trợ | LLM tóm tắt từng case, gán nhãn, trích câu bằng chứng, nêu độ tin cậy; trên tập case đã ẩn danh, LLM tạo nháp insight về pattern theo thời gian/khu vực. Nhân viên duyệt case không chắc chắn và mọi insight trước khi sử dụng. |
+| Metric | Ít nhất 90% case được gán nhãn đúng; giảm thời gian phân tích từ 3 phút xuống dưới 20 giây/case; bản báo cáo ngày có ít nhất 3 insight kèm bằng chứng và được quản lý duyệt. |
+| Quick architecture | LLM Feature + rule kiểm tra taxonomy và ngưỡng chuyển human review; không dùng agent tự trị. |
 
 ### Quick Problem Card #2 — Vinhomes: Điều hướng phản ánh cư dân
 
@@ -53,4 +53,4 @@
 
 ## Lựa chọn đề xuất
 
-Tôi đề xuất nhóm chọn **Xanh SM — phân tích lý do hủy chuyến**. Đây là tác vụ phân tích nội bộ, không ra quyết định thời gian thực cho tài xế hoặc khách hàng. Dữ liệu đầu vào là văn bản ngắn, đầu ra có thể giới hạn bằng một taxonomy nhãn, và nhân viên vẫn kiểm tra case có độ tin cậy thấp. Vì vậy, đây là một scope hẹp, có baseline rõ ràng và rủi ro vận hành thấp để bắt đầu prototype.
+Tôi đề xuất nhóm chọn **Xanh SM — Cancellation Intelligence Copilot**. Đây là tác vụ phân tích nội bộ, không ra quyết định thời gian thực cho tài xế hoặc khách hàng. LLM phù hợp vì đầu vào là ghi chú tự do, không đồng nhất; mô hình cần diễn giải ngữ cảnh, trích bằng chứng và tổng hợp pattern, thay vì chỉ khớp từ khóa. Đầu ra vẫn được giới hạn bằng taxonomy nhãn, ngưỡng tin cậy và human review, nên scope có baseline rõ ràng và rủi ro vận hành thấp để bắt đầu prototype.
