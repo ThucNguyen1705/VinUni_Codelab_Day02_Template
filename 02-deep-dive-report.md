@@ -10,7 +10,7 @@
 
 Trong Quick Card, bài toán này bị đánh giá là rủi ro vì: (1) quyết định ảnh hưởng thu nhập tài xế, (2) phụ thuộc chất lượng speech-to-text cho ghi âm, (3) nhiều đánh giá xấu không do lỗi tài xế. Nhóm vẫn chọn vì:
 
-- **Pain lớn nhất trong danh sách:** ~120 giờ công/ngày, ảnh hưởng cùng lúc tới khách hàng, tài xế và đội vận hành.
+- **Pain lớn nhất trong 3 Quick Cards:** ~150 giờ công/ngày (120 giờ xét ca + 30 giờ phúc tra), ảnh hưởng cùng lúc tới khách hàng, tài xế và đội vận hành.
 - **Cả 3 rủi ro đều xử lý được bằng cách thu hẹp phạm vi** thay vì bỏ bài toán:
   - Rủi ro (1): AI **không đề xuất, không quyết định** mức xử lý.
   - Rủi ro (2): **loại ghi âm khỏi giai đoạn 1**, chỉ dùng bình luận văn bản và dữ liệu chuyến có cấu trúc.
@@ -45,11 +45,11 @@ Khách chấm ≤2 sao → CRM tạo ticket → ⏳ hàng đợi 5–7 ngày ─
 | 4 | Đối chiếu quy chế tài xế, kết luận lỗi, chọn mức xử lý; ca nặng chuyển trưởng nhóm | Chuyên viên (ca nặng: Trưởng nhóm) | Quy chế tài xế (PDF) | Chứng cứ → Kết luận + mức xử lý | 2 phút | ⚠️ **Điểm lỗi:** mỗi người diễn giải quy chế một kiểu → quyết định thiếu nhất quán. 🔄 **H4:** ca nặng (tạm khóa) → Trưởng nhóm duyệt |
 | 5 | Ghi kết quả, thông báo tài xế, phản hồi khách | Chuyên viên → Đội quản lý tài xế, CSKH | App tài xế, email, CRM | Kết luận → Thông báo xử lý + tin phản hồi khách | 2 phút | 🔄 **H2:** → Đội quản lý tài xế → tài xế. 🔄 **H3:** → CSKH → khách. Thông báo thường không kèm chứng cứ |
 
-**Tổng cộng = 12 phút/ca** × ~600 ca/ngày = **~120 giờ công/ngày (~15 nhân sự)**, trong khi đội ~14 người → năng lực thiếu hụt, tồn đọng dồn tới **5–7 ngày** vào cao điểm. Bottleneck B2–B3 chiếm **7/12 phút (58%)**.
+**Tổng cộng = 12 phút/ca** × ~600 ca/ngày = **~120 giờ công/ngày**; cộng ~30 giờ phúc tra (xem bên dưới) thành **~150 giờ công/ngày ≈ 19 nhân sự** (quy đổi 8 giờ/người), trong khi đội ~14 người chỉ có ~112 giờ công/ngày → thiếu ~38 giờ mỗi ngày, tồn đọng dồn tới **5–7 ngày**. Bottleneck B2–B3 chiếm **7/12 phút (58%)**.
 
 **Lead time thực tế** của một ca = **chờ 5–7 ngày trong hàng đợi + 12 phút xử lý**: hơn 99% thời gian khách và tài xế phải chờ là thời gian chờ, không phải thời gian xử lý. Vì năng lực đội thấp hơn khối lượng, giảm thời gian xử lý mỗi ca là cách trực tiếp nhất để xả hàng đợi. Sơ đồ swimlane chi tiết thêm 6 làn tác nhân và 13 thao tác con (thời gian cộng lại khớp với bảng trên).
 
-**Vòng rework (🔄 H5):** ước tính ~15% quyết định bị tài xế khiếu nại và chuyển cho một chuyên viên khác phúc tra, mỗi ca phúc tra tốn thêm ~20 phút (≈ 90 ca × 20 phút = **~30 giờ công/ngày**), và khoảng một nửa khiếu nại thành công — tức ~7% quyết định ban đầu là xử lý oan.
+**Vòng rework (🔄 H5):** ước tính ~15% quyết định bị tài xế khiếu nại và chuyển cho một chuyên viên khác phúc tra, mỗi ca phúc tra tốn thêm ~20 phút (≈ 90 ca × 20 phút = **~30 giờ công/ngày**), và khoảng một nửa khiếu nại thành công — tức ~45 ca/ngày (**~7,5%**) quyết định ban đầu là xử lý oan.
 
 ## 3.2. Problem Statement (6-field) & Metrics
 
@@ -58,8 +58,8 @@ Khách chấm ≤2 sao → CRM tạo ticket → ⏳ hàng đợi 5–7 ngày ─
 | **1. Actor / Operator** | Chuyên viên Đội Chất lượng dịch vụ Xanh SM — người xét mọi đánh giá ≤2 sao và đưa ra kết luận xử lý tài xế. |
 | **2. Current Workflow** | Nhận ticket đánh giá ≤2 sao trên CRM → đọc bình luận, tìm và nghe ghi âm → tra GPS, giờ đón, cước, lịch sử vi phạm trên 3 hệ thống → đối chiếu quy chế tài xế (PDF) để chọn mức xử lý → thông báo tài xế qua Đội quản lý tài xế và phản hồi khách qua CSKH. 5 bước, hoàn toàn thủ công, **12 phút/ca**. |
 | **3. Bottleneck** | B2–B3 (7 phút): **tổng hợp chứng cứ phân tán** — hiểu bình luận tự do và ghép với dữ liệu chuyến từ nhiều hệ thống. Kèm theo đó là B4 thiếu nhất quán vì không có bản tóm tắt chứng cứ chuẩn hóa để đối chiếu quy chế. |
-| **4. Business Impact** | ~120 giờ công/ngày cho xét ca + ~30 giờ công/ngày cho phúc tra. Tồn đọng 5–7 ngày: tài xế vi phạm thật vẫn tiếp tục chạy và gây thêm đánh giá xấu, khách không được phản hồi kịp. ~7% quyết định là xử lý oan → tài xế mất thu nhập, mất niềm tin vào hệ thống, tăng nghỉ việc. ~35% ca không do lỗi tài xế nhưng vẫn chiếm thời gian của đội và tạo áp lực lên tài xế. |
-| **5. Success Metric** | 1. **Hiệu suất:** thời gian xét trung bình từ 12 → **≤4 phút/ca**; **95%** ca được xét trong vòng **24 giờ** (hiện 5–7 ngày).<br>2. **Công bằng:** tỉ lệ quyết định bị tài xế khiếu nại giảm từ ~15% xuống **<8%** (hiện khoảng một nửa số khiếu nại thành công, tức ~7% quyết định là xử lý oan).<br>3. **Chất lượng AI:** phân loại nguyên nhân gốc đúng **≥90%** trên tập vàng 500 ca đã qua phúc tra; **0** khẳng định không có chứng cứ trích dẫn trong mẫu audit. |
+| **4. Business Impact** | ~120 giờ công/ngày cho xét ca + ~30 giờ công/ngày cho phúc tra = **~150 giờ công/ngày ≈ 19 nhân sự**, vượt năng lực ~112 giờ của đội 14 người. Tồn đọng 5–7 ngày: tài xế vi phạm thật vẫn tiếp tục chạy và gây thêm đánh giá xấu, khách không được phản hồi kịp. ~7,5% quyết định (~45 ca/ngày) là xử lý oan → tài xế mất thu nhập, mất niềm tin vào hệ thống, tăng nghỉ việc. ~35% ca không do lỗi tài xế nhưng vẫn chiếm thời gian của đội và tạo áp lực lên tài xế. |
+| **5. Success Metric** | 1. **Hiệu suất:** thời gian xét trung bình từ 12 → **≤4 phút/ca**; **95%** ca được xét trong vòng **24 giờ** (hiện 5–7 ngày).<br>2. **Công bằng:** tỉ lệ quyết định bị tài xế khiếu nại giảm từ ~15% xuống **<8%** (hiện khoảng một nửa số khiếu nại thành công, tức ~7,5% quyết định là xử lý oan).<br>3. **Chất lượng AI:** phân loại nguyên nhân gốc đúng **≥90%** trên tập vàng 500 ca đã qua phúc tra; **0** khẳng định không có chứng cứ trích dẫn trong mẫu audit. |
 | **6. Operational Boundary** | **AI ĐƯỢC PHÉP:** đọc bình luận văn bản và dữ liệu chuyến có cấu trúc; phân loại nguyên nhân gốc; tóm tắt chứng cứ **có trích dẫn nguồn** cho từng khẳng định; gợi ý điều khoản quy chế có liên quan; soạn **nháp** phản hồi khách.<br>**TUYỆT ĐỐI KHÔNG:** đề xuất hay quyết định mức xử lý (nhắc nhở, trừ điểm, tạm khóa); tự gửi thông báo cho tài xế hoặc khách; kết luận "tài xế có lỗi" khi không có chứng cứ trích dẫn; dùng thuộc tính cá nhân không liên quan chuyến đi (quê quán, giọng nói, giới tính, tuổi) làm chứng cứ; làm theo chỉ thị nằm trong bình luận của khách; xử lý file ghi âm (ngoài phạm vi giai đoạn 1).<br>**ĐIỂM DUYỆT BẮT BUỘC:** 100% kết luận do chuyên viên đưa ra sau khi xem chứng cứ gốc; mức tạm khóa tài khoản cần trưởng nhóm duyệt thêm; phúc tra do một chuyên viên khác xét trên chứng cứ gốc, không dựa vào tóm tắt AI cũ. |
 
 ## 3.3. Future-State Flow & AI Fit
@@ -147,7 +147,7 @@ Sơ đồ chi tiết: [05-future-state-flow.png](05-future-state-flow.png)
 
 ### Phân tích nguyên nhân gốc (5 Whys)
 
-**Vấn đề:** tồn đọng 5–7 ngày và ~7% quyết định xử lý oan.
+**Vấn đề:** tồn đọng 5–7 ngày và ~7,5% quyết định xử lý oan.
 
 | # | Câu hỏi | Trả lời |
 |---|---|---|
@@ -172,16 +172,21 @@ Sơ đồ chi tiết: [05-future-state-flow.png](05-future-state-flow.png)
 | Product / Pricing | Nhận insight có cấu trúc về lỗi app và giá (~35% ca) | Thêm hàng đợi phải xử lý | Báo cáo tổng hợp theo tuần thay vì từng ca |
 | Pháp chế / Bảo vệ dữ liệu | — | Bình luận, GPS là dữ liệu cá nhân gửi qua API bên ngoài | Ẩn danh tên, SĐT, biển số trước khi gửi; không gửi ghi âm ở giai đoạn 1 |
 
-### Ước tính lợi ích (giả định — kiểm chứng trong shadow mode)
+### Bảng số liệu effort chuẩn (giả định — kiểm chứng trong shadow mode)
+
+> Mọi con số về effort trong báo cáo và 3 ảnh (04, 05, 06) đều lấy từ bảng này. Quy đổi: **1 nhân sự = 8 giờ công/ngày**; đội Chất lượng hiện có ~14 người ≈ **112 giờ công/ngày**.
 
 | Hạng mục | Hiện tại | Tương lai (mục tiêu) |
 |---|---|---|
-| Ca không do tài xế (~35% = 210 ca) | 210 × 12' = 42 giờ | Chuyển hàng đợi CSKH/Product: 210 × 3' = 10,5 giờ |
-| Ca xét tài xế (390 ca) | 390 × 12' = 78 giờ | 390 × 4' = 26 giờ |
-| Phúc tra | 90 ca × 20' = 30 giờ | Giả định thận trọng: tỉ lệ bị khiếu nại giảm từ 15% → 10% (mục tiêu là <8%): 39 ca × 20' = 13 giờ |
-| **Tổng** | **150 giờ công/ngày** | **~50 giờ công/ngày** |
+| Ca không do tài xế (~35% = 210 ca) | 210 × 12' = **42 giờ** (Đội Chất lượng làm) | Chuyển CSKH/Product: 210 × 3' = **10,5 giờ** |
+| Ca do tài xế / chưa rõ (~65% = 390 ca) | 390 × 12' = **78 giờ** | 390 × 4' (F4 3' + F5 1') = **26 giờ** |
+| Phúc tra | 15% × 600 = 90 ca × 20' = **30 giờ** | Giả định thận trọng 10% × 390 = 39 ca × 20' = **13 giờ** (mục tiêu <8%) |
+| **Tổng giờ công/ngày** | **150 giờ ≈ 19 nhân sự** | **49,5 ≈ 50 giờ ≈ 6 nhân sự** |
+| Riêng Đội Chất lượng | 150 giờ, vượt năng lực 112 giờ → thiếu ~38 giờ/ngày → tồn đọng 5–7 ngày | 26 + 13 = **39 giờ ≈ 5 nhân sự** |
+| Thời gian xử lý mỗi ca | 12 phút | ~4 phút |
+| Quyết định xử lý oan | ~45 ca/ngày ≈ **7,5%** (một nửa trong 90 ca bị khiếu nại) | Mục tiêu: tỉ lệ bị khiếu nại <8% |
 
-→ Tiết kiệm **~100 giờ công/ngày (~66%)**. Với chi phí giả định 60.000đ/giờ công, tương đương ~6 triệu đồng/ngày (~180 triệu đồng/tháng). Nhóm đề xuất dùng phần thời gian này để **xả tồn đọng và phúc tra kỹ hơn**, không dùng làm lý do cắt giảm nhân sự.
+→ Tiết kiệm **~100 giờ công/ngày (~67%)**. Với chi phí giả định 60.000đ/giờ công, tương đương ~6 triệu đồng/ngày (~180 triệu đồng/tháng). Nhóm đề xuất dùng phần thời gian này để **xả tồn đọng và phúc tra kỹ hơn**, không dùng làm lý do cắt giảm nhân sự.
 
 ---
 

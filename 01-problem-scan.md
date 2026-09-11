@@ -12,7 +12,7 @@ Dùng 4 lenses: **Lặp lại · Tốn thời gian · AI có thể tốt hơn ·
 |---|------------|------|---------------------|
 | 1 | **Vinpearl** | Tốn thời gian | Nhân viên Reservation đọc, dịch và phân loại thủ công các ghi chú "yêu cầu đặc biệt" (dị ứng, nôi em bé, đón sân bay, trang trí kỷ niệm...) viết tự do bằng nhiều ngôn ngữ trong booking từ OTA (Booking.com, Agoda, Trip.com...), rồi chuyển cho từng bộ phận. *Ước tính: ~130 yêu cầu/ngày/resort × 10 phút = ~22 giờ công/ngày; ~4% yêu cầu bị bỏ sót.* |
 | 2 | **Xanh SM** | Lặp lại | Tổng đài hỗ trợ tài xế trả lời đi trả lời lại các câu hỏi về chính sách thu nhập, thưởng theo tuần, phí phạt — chính sách thay đổi thường xuyên nên tổng đài viên phải tra văn bản. *Ước tính: 2.000 cuộc/ngày × 5 phút = ~167 giờ công/ngày; ~60% là câu hỏi lặp lại.* |
-| 3 | **Xanh SM** | Pain từ người khác | Đội Chất lượng dịch vụ xem xét thủ công đánh giá ≤2 sao (đọc bình luận, nghe ghi âm, xem GPS) để quyết định xử lý tài xế; tồn đọng lâu, tài xế phàn nàn bị xử lý oan. *Ước tính: 600 ca/ngày × 12 phút = 120 giờ công/ngày; tồn đọng 5–7 ngày.* |
+| 3 | **Xanh SM** | Pain từ người khác | Đội Chất lượng dịch vụ xem xét thủ công đánh giá ≤2 sao (đọc bình luận, nghe ghi âm, xem GPS) để quyết định xử lý tài xế; tồn đọng lâu, tài xế phàn nàn bị xử lý oan. *Ước tính: 600 ca/ngày × 12 phút = 120 giờ công/ngày (~150 giờ nếu tính phúc tra); tồn đọng 5–7 ngày.* |
 | 4 | **VinFast** | AI có thể tốt hơn | Hotline trạm sạc công cộng: khách báo "trụ không nhận sạc", tổng đài viên hỏi theo kịch bản cứng, tra mã lỗi thủ công rồi mới hướng dẫn hoặc điều kỹ thuật. *Ước tính: 800 cuộc/ngày × 8 phút = ~107 giờ công/ngày; khoảng một nửa là lỗi khách tự khắc phục được.* |
 | 5 | **Vinmec** | Tốn thời gian | Điều phối viên khách quốc tế dịch và tóm tắt hồ sơ bệnh sử gửi từ nước ngoài (Anh/Hàn/Nhật) trước khi bác sĩ tiếp nhận. *Ước tính: 40 hồ sơ/ngày × 45 phút = 30 giờ công/ngày; bác sĩ nhận hồ sơ trễ 1–2 ngày.* |
 | 6 | **VinWonders** | Pain từ người khác | Tìm trẻ lạc: phụ huynh mô tả tại quầy thông tin, nhân viên truyền bộ đàm từng khu. *Ước tính: ~15 ca/ngày cao điểm × 25 phút tìm.* → Ghi nhận nhưng **không phù hợp với LLM**: nên giải quyết bằng quy trình + vòng tay QR cho trẻ (No AI). |
@@ -81,7 +81,7 @@ Chọn top 3: **#1 (Vinpearl yêu cầu đặc biệt)**, **#3 (Xanh SM xét đ�
 **Chọn Card #2 — Xanh SM: Xét đánh giá ≤2 sao để xử lý tài xế.**
 
 - **Vì sao chọn:**
-  - Pain lớn nhất trong danh sách: ~120 giờ công/ngày, ảnh hưởng cùng lúc tới khách hàng, tài xế và đội vận hành.
+  - Pain lớn nhất trong 3 Quick Cards: ~150 giờ công/ngày (120 giờ xét ca + 30 giờ phúc tra), ảnh hưởng cùng lúc tới khách hàng, tài xế và đội vận hành.
   - Bottleneck là tổng hợp chứng cứ phân tán (bình luận tự do + dữ liệu chuyến), đúng chỗ LLM kết hợp Rule phát huy tác dụng.
 - **Rủi ro đã nêu ở phần stress-test không bị bỏ qua mà được xử lý bằng cách thu hẹp phạm vi:**
   - AI **không đề xuất, không quyết định** mức xử lý tài xế; con người quyết định 100%.
