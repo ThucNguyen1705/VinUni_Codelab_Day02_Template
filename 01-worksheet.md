@@ -63,11 +63,11 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 ### 📝 List bài toán của tôi:
 | # | Subsidiary (VinFast/Xanh SM...) | Lens | Mô tả ngắn bài toán |
 |---|----------------------------------|------|---------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 | VinFast | CSKH & Hậu mãi (customer-facing) | Trợ lý AI hội thoại tiếng Việt xử lý hỏi đáp bảo hành, hướng dẫn đặt lịch bảo dưỡng/cứu hộ và tra cứu trạng thái phiếu dịch vụ; tự chuyển nhân viên khi chạm tiền bạc/pháp lý.  (UC chính) |
+| 2 | Xanh SM | Vận hành & Trải nghiệm (ops) | Phân loại & định tuyến tự động khiếu nại chuyến đi (tài xế/cước/thái độ/mất đồ) theo nhãn + mức ưu tiên, kèm tóm tắt ca cho bộ phận xử lý. |
+| 3 | VinHomes | Cư dân & Dịch vụ (customer-facing) | Trợ lý cư dân: tiếp nhận & phân loại yêu cầu (báo sự cố kỹ thuật, đặt tiện ích, hỏi phí quản lý), tạo ticket và định tuyến tới Ban quản lý; không cam kết chi phí/pháp lý. |
+| 4 | WinCommerce (WinMart) | Bán lẻ & CSKH (customer-facing) | Trợ lý tra cứu khuyến mãi/tồn kho và xử lý quy trình đổi–trả; tóm tắt & phân loại đánh giá sản phẩm cho đội vận hành. Không tự duyệt hoàn tiền. |
+| 5 | Vinmec | Y tế – Đặt lịch (rủi ro cao) | Trợ lý đặt lịch khám, nhắc lịch và hướng dẫn chuẩn bị trước khám. Ranh giới cứng: KHÔNG chẩn đoán/tư vấn điều trị, mọi câu hỏi y khoa → chuyển bác sĩ. |
 
 ---
 
