@@ -1,6 +1,6 @@
 # 🔍 Phase 1 — SCAN & Phase 2 — QUICK-ASSESS: Vin Smart Future
 
-> **Họ và tên sinh viên:** Nguyễn Quang Minh  
+> **Họ và tên sinh viên:** Nguyễn Đức Minh  
 > **Mã số sinh viên (MSSV):** 2A202602891  
 > **Vị trí công tác:** AI Product Engineer — Vin Smart Future (Vingroup)  
 > **Đơn vị phối hợp:** Khối Phát triển Trạm sạc & Khối Dịch vụ Thông minh VinFast  
@@ -10,7 +10,7 @@
 
 ## 🏛️ Bối cảnh nghiệp vụ: Tôi là ai?
 
-Tôi là **Nguyễn Quang Minh** (MSSV: `2A202602891`), AI Product Engineer tại **Vin Smart Future**. Đơn vị của tôi được giao nhiệm vụ phối hợp trực tiếp với **Khối Phát triển Trạm sạc VinFast (VinFast Charging Network)** và **Trung tâm Trải nghiệm Khách hàng VinFast** để nâng cao trải nghiệm sạc xe điện thông minh cho toàn bộ người dùng xe điện VinFast (từ các dòng xe đô thị như VF3, VF5 đến các dòng SUV cao cấp VF8, VF9).
+Tôi là **Nguyễn Đức Minh** (MSSV: `2A202602891`), AI Product Engineer tại **Vin Smart Future**. Đơn vị của tôi được giao nhiệm vụ phối hợp trực tiếp với **Khối Phát triển Trạm sạc VinFast (VinFast Charging Network)** và **Trung tâm Trải nghiệm Khách hàng VinFast** để nâng cao trải nghiệm sạc xe điện thông minh cho toàn bộ người dùng xe điện VinFast (từ các dòng xe đô thị như VF3, VF5 đến các dòng SUV cao cấp VF8, VF9).
 
 Trong quá trình đồng hành cùng đội ngũ kỹ thuật thực địa và đường dây nóng CSKH của VinFast, tôi ghi nhận một điểm nghẽn nghiêm trọng: Khi xe gần cạn pin hoặc di chuyển đường dài, tài xế thường xuyên phải tự tìm trạm sạc trên ứng dụng hoặc bản đồ bên thứ ba, nhưng khi tới nơi lại gặp tình trạng trạm sạc quá tải, hết trụ trống hoặc trụ sạc không tương thích công suất/chuẩn cổng sạc (CCS2 DC siêu nhanh vs GBT / AC Type 2). Tình trạng này gây ức chế tâm lý cực lớn (Range Anxiety - nỗi lo cạn pin), thậm chí dẫn đến các vụ xe cạn kiệt pin giữa đường và phải gọi cứu hộ khẩn cấp.
 

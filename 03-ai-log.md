@@ -1,6 +1,6 @@
 # 📝 Nhật ký Sử dụng AI & Bài học Kinh nghiệm (AI Thought-Partner Log)
 
-> **Họ và tên:** Nguyễn Quang Minh  
+> **Họ và tên:** Nguyễn Đức Minh  
 > **Mã số sinh viên (MSSV):** 2A202602891  
 > **Khóa học:** AI Product Engineering — Vin Smart Future (Vingroup)  
 > **Dự án:** Trợ lý Hướng dẫn Trạm sạc Thông minh VinFast (VinFast Smart Charging Assistant)  

@@ -1,6 +1,6 @@
 # 🏗️ Phase 3, 4 & 5 — DEEP-DIVE REPORT: Vin Smart Future
 
-> **Học viên thực hiện:** Nguyễn Quang Minh  
+> **Học viên thực hiện:** Nguyễn Đức Minh  
 > **Mã số sinh viên (MSSV):** 2A202602891  
 > **Chức danh:** AI Product Engineer — Vin Smart Future (Vingroup)  
 > **Đơn vị tiếp nhận:** Khối Phát triển Trạm sạc VinFast & Trung tâm Điều hành Di chuyển Thông minh  
@@ -10,7 +10,7 @@
 
 ## 🏛️ 1. Bối cảnh dự án & Nhân sự triển khai
 
-Tôi là **Nguyễn Quang Minh** (MSSV: `2A202602891`), AI Product Engineer trực thuộc **Vin Smart Future**. Dự án này được triển khai theo đơn đặt hàng của Ban Giám đốc VinFast nhằm giải quyết triệt để bài toán **"Range Anxiety" (Nỗi lo cạn kiệt pin)** và tối ưu hóa hiệu suất sử dụng mạng lưới hơn 150.000 cổng sạc xe điện của VinFast trên toàn quốc.
+Tôi là **Nguyễn Đức Minh** (MSSV: `2A202602891`), AI Product Engineer trực thuộc **Vin Smart Future**. Dự án này được triển khai theo đơn đặt hàng của Ban Giám đốc VinFast nhằm giải quyết triệt để bài toán **"Range Anxiety" (Nỗi lo cạn kiệt pin)** và tối ưu hóa hiệu suất sử dụng mạng lưới hơn 150.000 cổng sạc xe điện của VinFast trên toàn quốc.
 
 Mặc dù VinFast sở hữu mạng lưới trạm sạc lớn nhất Việt Nam, nhưng sự đa dạng về chuẩn sạc và công suất trụ (AC 11kW, DC 30kW, DC 60kW, DC 150kW, DC 250kW siêu nhanh) cùng các dòng xe khác nhau (từ VF3, VF5 dùng cổng sạc phổ thông đến VF8, VF9 hỗ trợ sạc siêu nhanh CCS2 / chuẩn chuyển đổi GBT) dẫn đến việc người dùng gặp nhiều khó khăn khi tự tìm trạm sạc phù hợp. Việc triển khai một Trợ lý AI đồng hành thông minh sẽ chuyển đổi trải nghiệm sạc xe từ bị động, căng thẳng sang chủ động, tự động hóa và an toàn tuyệt đối.
 
