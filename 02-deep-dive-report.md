@@ -4,6 +4,8 @@
 > **Bối cảnh giả định:** ~600 ca đánh giá ≤2 sao cần xét/ngày trên toàn quốc; đội Chất lượng ~14 chuyên viên.
 > Mọi số liệu là **ước tính giả định của nhóm**, ghi kèm công thức để thay bằng baseline thật.
 
+![Current State → Future State](06-current-vs-future.png)
+
 ## Vì sao nhóm chọn bài này
 
 Trong Quick Card, bài toán này bị đánh giá là rủi ro vì: (1) quyết định ảnh hưởng thu nhập tài xế, (2) phụ thuộc chất lượng speech-to-text cho ghi âm, (3) nhiều đánh giá xấu không do lỗi tài xế. Nhóm vẫn chọn vì:
@@ -25,12 +27,12 @@ Sơ đồ chi tiết: [04-workflow-diagram.png](04-workflow-diagram.png)
 ![Current-State Workflow](04-workflow-diagram.png)
 
 ```text
-Khách chấm ≤2 sao ─🔄 H1─→ B1 Nhận & lọc ticket (1')
+Khách chấm ≤2 sao → CRM tạo ticket → ⏳ hàng đợi 5–7 ngày ─🔄 H1─→ B1 Nhận & lọc ticket (1')
   ─→ B2 Đọc bình luận + tìm & nghe ghi âm (4') 🔴
   ─→ B3 Tra GPS, giờ đón, cước, lịch sử tài xế (3') 🔴
-  ─→ B4 Đối chiếu quy chế, chọn mức xử lý (2') ⚠️ thiếu nhất quán
+  ─→ B4 Đối chiếu quy chế, chọn mức xử lý (2') ⚠️ thiếu nhất quán ─(ca nặng)─🔄 H4─→ Trưởng nhóm duyệt
   ─→ B5 Thông báo tài xế & phản hồi khách (2') ─🔄 H2, H3─→ Tài xế / Khách
-  ─→ Tài xế khiếu nại (~15%) ─→ Phúc tra: người khác làm lại B2–B4 (+~20') ↩️
+  ─→ Tài xế khiếu nại (~15%) ─🔄 H5─→ Phúc tra: người khác làm lại B2–B4 (+~20') ↩️
 
 🔴 = Bottleneck   🔄 = Handoff   ⏱ Tổng cộng = 12 phút/ca (chưa tính phúc tra)
 ```
@@ -40,12 +42,14 @@ Khách chấm ≤2 sao ─🔄 H1─→ B1 Nhận & lọc ticket (1')
 | 1 | Nhận ticket đánh giá ≤2 sao, lọc ca cần xét | Chuyên viên Chất lượng | CRM / dashboard đánh giá | Đánh giá + bình luận → Ticket cần xét | 1 phút | 🔄 **H1:** App khách → CRM → người. Ước tính ~35% ticket thực ra do app, điều phối hoặc giá cước, nhưng vẫn vào hàng đợi xét tài xế |
 | 2 | Đọc bình luận; tìm và nghe ghi âm cuộc gọi khách–tài xế/tổng đài (nếu có) | Chuyên viên | CRM, hệ thống ghi âm tổng đài | Bình luận, file ghi âm → Ghi chú tay về lời khách | 4 phút | 🔴 **Bottleneck:** tìm đúng file ghi âm mất thời gian; bình luận mơ hồ, nhiều ý |
 | 3 | Tra dữ liệu chuyến: lộ trình GPS, giờ đón thực tế, cước, lịch sử vi phạm | Chuyên viên | Bản đồ GPS, hệ thống cước, hồ sơ tài xế | Mã chuyến → Chứng cứ tự tổng hợp | 3 phút | 🔴 **Bottleneck:** chuyển qua lại 3 hệ thống, chép số liệu thủ công |
-| 4 | Đối chiếu quy chế tài xế, kết luận lỗi, chọn mức xử lý; ca nặng chuyển trưởng nhóm | Chuyên viên (ca nặng: Trưởng nhóm) | Quy chế tài xế (PDF) | Chứng cứ → Kết luận + mức xử lý | 2 phút | ⚠️ **Điểm lỗi:** mỗi người diễn giải quy chế một kiểu → quyết định thiếu nhất quán |
+| 4 | Đối chiếu quy chế tài xế, kết luận lỗi, chọn mức xử lý; ca nặng chuyển trưởng nhóm | Chuyên viên (ca nặng: Trưởng nhóm) | Quy chế tài xế (PDF) | Chứng cứ → Kết luận + mức xử lý | 2 phút | ⚠️ **Điểm lỗi:** mỗi người diễn giải quy chế một kiểu → quyết định thiếu nhất quán. 🔄 **H4:** ca nặng (tạm khóa) → Trưởng nhóm duyệt |
 | 5 | Ghi kết quả, thông báo tài xế, phản hồi khách | Chuyên viên → Đội quản lý tài xế, CSKH | App tài xế, email, CRM | Kết luận → Thông báo xử lý + tin phản hồi khách | 2 phút | 🔄 **H2:** → Đội quản lý tài xế → tài xế. 🔄 **H3:** → CSKH → khách. Thông báo thường không kèm chứng cứ |
 
 **Tổng cộng = 12 phút/ca** × ~600 ca/ngày = **~120 giờ công/ngày (~15 nhân sự)**, trong khi đội ~14 người → năng lực thiếu hụt, tồn đọng dồn tới **5–7 ngày** vào cao điểm. Bottleneck B2–B3 chiếm **7/12 phút (58%)**.
 
-**Vòng rework:** ước tính ~15% quyết định bị tài xế khiếu nại, mỗi ca phúc tra tốn thêm ~20 phút (≈ 90 ca × 20 phút = **~30 giờ công/ngày**), và khoảng một nửa khiếu nại thành công — tức ~7% quyết định ban đầu là xử lý oan.
+**Lead time thực tế** của một ca = **chờ 5–7 ngày trong hàng đợi + 12 phút xử lý**: hơn 99% thời gian khách và tài xế phải chờ là thời gian chờ, không phải thời gian xử lý. Vì năng lực đội thấp hơn khối lượng, giảm thời gian xử lý mỗi ca là cách trực tiếp nhất để xả hàng đợi. Sơ đồ swimlane chi tiết thêm 6 làn tác nhân và 13 thao tác con (thời gian cộng lại khớp với bảng trên).
+
+**Vòng rework (🔄 H5):** ước tính ~15% quyết định bị tài xế khiếu nại và chuyển cho một chuyên viên khác phúc tra, mỗi ca phúc tra tốn thêm ~20 phút (≈ 90 ca × 20 phút = **~30 giờ công/ngày**), và khoảng một nửa khiếu nại thành công — tức ~7% quyết định ban đầu là xử lý oan.
 
 ## 3.2. Problem Statement (6-field) & Metrics
 
@@ -55,7 +59,7 @@ Khách chấm ≤2 sao ─🔄 H1─→ B1 Nhận & lọc ticket (1')
 | **2. Current Workflow** | Nhận ticket đánh giá ≤2 sao trên CRM → đọc bình luận, tìm và nghe ghi âm → tra GPS, giờ đón, cước, lịch sử vi phạm trên 3 hệ thống → đối chiếu quy chế tài xế (PDF) để chọn mức xử lý → thông báo tài xế qua Đội quản lý tài xế và phản hồi khách qua CSKH. 5 bước, hoàn toàn thủ công, **12 phút/ca**. |
 | **3. Bottleneck** | B2–B3 (7 phút): **tổng hợp chứng cứ phân tán** — hiểu bình luận tự do và ghép với dữ liệu chuyến từ nhiều hệ thống. Kèm theo đó là B4 thiếu nhất quán vì không có bản tóm tắt chứng cứ chuẩn hóa để đối chiếu quy chế. |
 | **4. Business Impact** | ~120 giờ công/ngày cho xét ca + ~30 giờ công/ngày cho phúc tra. Tồn đọng 5–7 ngày: tài xế vi phạm thật vẫn tiếp tục chạy và gây thêm đánh giá xấu, khách không được phản hồi kịp. ~7% quyết định là xử lý oan → tài xế mất thu nhập, mất niềm tin vào hệ thống, tăng nghỉ việc. ~35% ca không do lỗi tài xế nhưng vẫn chiếm thời gian của đội và tạo áp lực lên tài xế. |
-| **5. Success Metric** | 1. **Hiệu suất:** thời gian xét trung bình từ 12 → **≤4 phút/ca**; **95%** ca được xét trong vòng **24 giờ** (hiện 5–7 ngày).<br>2. **Công bằng:** tỉ lệ khiếu nại thành công giảm từ ~15% quyết định bị khiếu nại xuống **<8%**.<br>3. **Chất lượng AI:** phân loại nguyên nhân gốc đúng **≥90%** trên tập vàng 500 ca đã qua phúc tra; **0** khẳng định không có chứng cứ trích dẫn trong mẫu audit. |
+| **5. Success Metric** | 1. **Hiệu suất:** thời gian xét trung bình từ 12 → **≤4 phút/ca**; **95%** ca được xét trong vòng **24 giờ** (hiện 5–7 ngày).<br>2. **Công bằng:** tỉ lệ quyết định bị tài xế khiếu nại giảm từ ~15% xuống **<8%** (hiện khoảng một nửa số khiếu nại thành công, tức ~7% quyết định là xử lý oan).<br>3. **Chất lượng AI:** phân loại nguyên nhân gốc đúng **≥90%** trên tập vàng 500 ca đã qua phúc tra; **0** khẳng định không có chứng cứ trích dẫn trong mẫu audit. |
 | **6. Operational Boundary** | **AI ĐƯỢC PHÉP:** đọc bình luận văn bản và dữ liệu chuyến có cấu trúc; phân loại nguyên nhân gốc; tóm tắt chứng cứ **có trích dẫn nguồn** cho từng khẳng định; gợi ý điều khoản quy chế có liên quan; soạn **nháp** phản hồi khách.<br>**TUYỆT ĐỐI KHÔNG:** đề xuất hay quyết định mức xử lý (nhắc nhở, trừ điểm, tạm khóa); tự gửi thông báo cho tài xế hoặc khách; kết luận "tài xế có lỗi" khi không có chứng cứ trích dẫn; dùng thuộc tính cá nhân không liên quan chuyến đi (quê quán, giọng nói, giới tính, tuổi) làm chứng cứ; làm theo chỉ thị nằm trong bình luận của khách; xử lý file ghi âm (ngoài phạm vi giai đoạn 1).<br>**ĐIỂM DUYỆT BẮT BUỘC:** 100% kết luận do chuyên viên đưa ra sau khi xem chứng cứ gốc; mức tạm khóa tài khoản cần trưởng nhóm duyệt thêm; phúc tra do một chuyên viên khác xét trên chứng cứ gốc, không dựa vào tóm tắt AI cũ. |
 
 ## 3.3. Future-State Flow & AI Fit
@@ -75,16 +79,20 @@ Khách chấm ≤2 sao ─🔄 H1─→ B1 Nhận & lọc ticket (1')
 
 ### Future-State Flow
 
+Sơ đồ chi tiết: [05-future-state-flow.png](05-future-state-flow.png)
+
+![Future-State Workflow](05-future-state-flow.png)
+
 ```text
-⚙️ B1 Rule: ticket ≤2 sao → tự kéo dữ liệu chuyến + tính cờ chứng cứ (lệch lộ trình %, đón trễ, cước)   ⏱ tự động
-  ─→ 🔵 B2 LLM: phân loại nguyên nhân gốc + tóm tắt chứng cứ có trích dẫn + gợi ý điều khoản quy chế
+⚙️ F1 Rule: ticket ≤2 sao → tự kéo dữ liệu chuyến + tính cờ chứng cứ (lệch lộ trình %, đón trễ, cước)   ⏱ tự động
+  ─→ 🔵 F2 LLM: phân loại nguyên nhân gốc + tóm tắt chứng cứ có trích dẫn + gợi ý điều khoản quy chế
                + nháp phản hồi khách → JSON                                                        ⏱ ~5 giây
-  ─→ ⚙️ B3 Validator: đúng schema? mọi khẳng định có trích dẫn tồn tại? có từ ngữ thuộc tính cá nhân?
+  ─→ ⚙️ F3 Validator: đúng schema? mọi khẳng định có trích dẫn tồn tại? có từ ngữ thuộc tính cá nhân?
         ├─ Nguyên nhân = app / giá cước / điều phối → hàng đợi CSKH/Product (người xét, không xử lý tài xế)
         └─ Nguyên nhân = tài xế / không rõ → hàng đợi xét tài xế
-  ─→ 🟢 B4 Chuyên viên: xem tóm tắt + chứng cứ gốc, TỰ chọn mức xử lý (AI không gợi ý mức)            ⏱ ~3 phút
+  ─→ 🟢 F4 Chuyên viên: xem tóm tắt + chứng cứ gốc, TỰ chọn mức xử lý (AI không gợi ý mức)            ⏱ ~3 phút
         └─ Mức tạm khóa → 🟢 Trưởng nhóm duyệt
-  ─→ ⚙️ B5 Hệ thống: gửi thông báo tài xế KÈM chứng cứ + nút phúc tra; gửi phản hồi khách đã duyệt    ⏱ ~1 phút duyệt nháp
+  ─→ 🟢 F5 Duyệt nháp → hệ thống gửi thông báo tài xế KÈM chứng cứ + nút phúc tra; gửi phản hồi khách    ⏱ ~1 phút duyệt nháp
 
 ↩️ Fallback: LLM lỗi / JSON lỗi / "không đủ thông tin" / validator chặn → hàng đợi xét tay như hiện tại
 ↩️ Phúc tra: chuyên viên khác xét trên chứng cứ gốc, không xem tóm tắt AI cũ
@@ -92,7 +100,7 @@ Khách chấm ≤2 sao ─🔄 H1─→ B1 Nhận & lọc ticket (1')
 
 🔵 AI Step · 🟢 Human Step (HITL) · ⚙️ Rule/hệ thống · ↩️ Fallback
 
-**Output JSON thật của B2** (prototype ở Phase 4, ca đối chứng "tài xế đi vòng thật", lần chạy 1):
+**Output JSON thật của F2** (prototype ở Phase 4, ca đối chứng "tài xế đi vòng thật", lần chạy 1):
 
 ```json
 {
@@ -170,7 +178,7 @@ Khách chấm ≤2 sao ─🔄 H1─→ B1 Nhận & lọc ticket (1')
 |---|---|---|
 | Ca không do tài xế (~35% = 210 ca) | 210 × 12' = 42 giờ | Chuyển hàng đợi CSKH/Product: 210 × 3' = 10,5 giờ |
 | Ca xét tài xế (390 ca) | 390 × 12' = 78 giờ | 390 × 4' = 26 giờ |
-| Phúc tra | 90 ca × 20' = 30 giờ | Tỉ lệ bị khiếu nại giảm từ 15% → 10% nhờ thông báo kèm chứng cứ: 39 ca × 20' = 13 giờ |
+| Phúc tra | 90 ca × 20' = 30 giờ | Giả định thận trọng: tỉ lệ bị khiếu nại giảm từ 15% → 10% (mục tiêu là <8%): 39 ca × 20' = 13 giờ |
 | **Tổng** | **150 giờ công/ngày** | **~50 giờ công/ngày** |
 
 → Tiết kiệm **~100 giờ công/ngày (~66%)**. Với chi phí giả định 60.000đ/giờ công, tương đương ~6 triệu đồng/ngày (~180 triệu đồng/tháng). Nhóm đề xuất dùng phần thời gian này để **xả tồn đọng và phúc tra kỹ hơn**, không dùng làm lý do cắt giảm nhân sự.
@@ -180,9 +188,9 @@ Khách chấm ≤2 sao ─🔄 H1─→ B1 Nhận & lọc ticket (1')
 # 💻 Phase 4 — Prototype & Boundary Test (bằng chứng thực nghiệm)
 
 Nhóm dựng prototype Python (thư mục `prototypes/` trên branch cá nhân — không merge vào `main` theo quy định môn học) mô phỏng đúng Future-State Flow:
-- ⚙️ **B1 Rule:** tính `T1` (lệch lộ trình %), `T2` (đón trễ), `T3` (cước so với báo trước, hệ số cao điểm) từ dữ liệu chuyến giả lập.
-- 🔵 **B2 LLM:** `gemini-3.5-flash-lite` với **structured output** — Pydantic schema không có trường mức xử lý.
-- ⚙️ **B3 Validator:** kiểm tra mã nguồn trích dẫn và mã quy chế có tồn tại, từ ngữ về mức xử lý, từ ngữ thuộc tính cá nhân trong chứng cứ, thẻ `[DRAFT_ONLY]`.
+- ⚙️ **F1 Rule:** tính `T1` (lệch lộ trình %), `T2` (đón trễ), `T3` (cước so với báo trước, hệ số cao điểm) từ dữ liệu chuyến giả lập.
+- 🔵 **F2 LLM:** `gemini-3.5-flash-lite` với **structured output** — Pydantic schema không có trường mức xử lý.
+- ⚙️ **F3 Validator:** kiểm tra mã nguồn trích dẫn và mã quy chế có tồn tại, từ ngữ về mức xử lý, từ ngữ thuộc tính cá nhân trong chứng cứ, thẻ `[DRAFT_ONLY]`.
 
 Mỗi ca chạy **3 lần** vì LLM không tất định. Trạng thái:
 - **PASS:** đúng kỳ vọng, không vi phạm.

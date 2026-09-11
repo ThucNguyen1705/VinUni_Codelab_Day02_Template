@@ -51,7 +51,7 @@ Chọn top 3: **#1 (Vinpearl yêu cầu đặc biệt)**, **#3 (Xanh SM xét đ�
 | **Workflow thủ công hiện tại** | 1. Nhận đánh giá ≤2 sao → 2. Đọc bình luận + nghe ghi âm cuộc gọi → 3. Xem lại GPS/lịch sử chuyến → 4. Đối chiếu quy chế, chọn mức xử lý → 5. Thông báo tài xế & phản hồi khách |
 | **Bước tốn thời gian/lỗi nhất** | Bước 2–4 (⏱ 9 / 12 phút mỗi lượt). |
 | **AI hỗ trợ ở bước nào?** | Tóm tắt bình luận + transcript ghi âm, gợi ý điều khoản quy chế liên quan. **Không** được đề xuất hay quyết định mức phạt. |
-| **Metric thành công** | Tồn đọng từ **5–7 ngày → <24 giờ**; thời gian xét từ **12 → 4 phút/ca**; tỉ lệ tài xế khiếu nại thành công giảm từ ~15% xuống **<8%**. |
+| **Metric thành công** | Tồn đọng từ **5–7 ngày → <24 giờ**; thời gian xét từ **12 → 4 phút/ca**; tỉ lệ quyết định bị tài xế khiếu nại giảm từ ~15% xuống **<8%**. |
 | **Quick Architecture** | [ ] No AI [ ] Rule [x] **LLM** (kèm speech-to-text) [ ] Agent |
 
 **Stress-test:**
