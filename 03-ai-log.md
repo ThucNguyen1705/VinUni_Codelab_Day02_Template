@@ -14,7 +14,8 @@
   - Tiêu chí 5 đếm chữ `Failed` trong toàn bộ output, nên chỉ một chữ "failed" xuất hiện ở bất kỳ đâu cũng mất điểm.
   - Script bị giới hạn 30 giây → nên tắt thinking của Gemini 2.5 Flash để 3 lượt gọi kịp chạy.
   - Trên Windows, output bị pipe không phải UTF-8 nên in emoji có thể làm script crash.
-- **Brainstorm:** AI gợi ý khoảng 20 pain point cho 4 công ty thành viên và phân loại theo 4 lenses, giúp tôi có nhiều lựa chọn để lọc ra bài toán Vinpearl.
+- **Brainstorm:** AI gợi ý khoảng 20 pain point cho 4 công ty thành viên và phân loại theo 4 lenses, giúp tôi có nhiều lựa chọn để lọc ra 3 Quick Cards.
+- **Chọn bài toán:** ban đầu AI đề xuất Vinpearl vì rủi ro thấp hơn. Tôi chọn bài Xanh SM xét đánh giá ≤2 sao vì pain lớn hơn, và dùng chính các rủi ro AI đã chỉ ra (công bằng cho tài xế, phụ thuộc speech-to-text) để thu hẹp phạm vi: AI không đề xuất mức xử lý, chưa dùng ghi âm.
 - **Phản biện:** khi đóng vai CFO/Trưởng phòng Vận hành, AI chỉ ra rằng bài toán hotline trạm sạc VinFast nên giải bằng rule-based vì mã lỗi trụ sạc là dữ liệu có cấu trúc.
 
 ## 3. AI sai / có dấu hiệu hallucination ở đâu

@@ -78,8 +78,14 @@ Chọn top 3: **#1 (Vinpearl yêu cầu đặc biệt)**, **#3 (Xanh SM xét đ�
 
 # 🗳️ Đề xuất bài toán cho Deep-Dive
 
-**Chọn Card #1 — Vinpearl: Yêu cầu đặc biệt đa ngôn ngữ trong booking OTA.**
+**Chọn Card #2 — Xanh SM: Xét đánh giá ≤2 sao để xử lý tài xế.**
 
-- **Vì sao chọn:** bottleneck nằm đúng ở phần xử lý ngôn ngữ tự nhiên đa ngôn ngữ (thế mạnh thật sự của LLM), luồng xử lý cố định, rủi ro kiểm soát được bằng nhân viên duyệt.
-- **Loại Card #2:** quyết định ảnh hưởng thu nhập tài xế, phụ thuộc chất lượng speech-to-text chưa được đo → rủi ro công bằng cao, cần thêm dữ liệu.
+- **Vì sao chọn:**
+  - Pain lớn nhất trong danh sách: ~120 giờ công/ngày, ảnh hưởng cùng lúc tới khách hàng, tài xế và đội vận hành.
+  - Bottleneck là tổng hợp chứng cứ phân tán (bình luận tự do + dữ liệu chuyến), đúng chỗ LLM kết hợp Rule phát huy tác dụng.
+- **Rủi ro đã nêu ở phần stress-test không bị bỏ qua mà được xử lý bằng cách thu hẹp phạm vi:**
+  - AI **không đề xuất, không quyết định** mức xử lý tài xế; con người quyết định 100%.
+  - **Không dùng ghi âm** ở giai đoạn đầu (tránh phụ thuộc speech-to-text chưa được đo); chỉ dùng bình luận văn bản và dữ liệu chuyến.
+  - Thêm bước **phân loại nguyên nhân gốc** để đưa các ca do app hoặc giá cước ra khỏi hàng đợi xét tài xế.
+- **Loại Card #1:** pain nhỏ hơn (~22 giờ công/ngày/resort), và thông tin dị ứng là dữ liệu sức khỏe nhạy cảm, cần pháp chế duyệt trước khi gửi qua API bên ngoài. Vẫn là ứng viên tốt cho vòng sau.
 - **Loại Card #3:** rule-based giải quyết tốt hơn → không cần AI (Problem First, AI Second).
