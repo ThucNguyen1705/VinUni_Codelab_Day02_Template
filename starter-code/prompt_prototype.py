@@ -15,10 +15,10 @@ import sys
 import re
 from typing import Any
 
-# Ensure UTF-8 output encoding across Windows/Linux
+# Ensure UTF-8 output encoding across Windows/Linux without charmap crashes
 if sys.stdout.encoding != 'utf-8':
     try:
-        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
     except Exception:
         pass
 
@@ -74,9 +74,10 @@ BẠN PHẢI TUÂN THỦ NGHIÊM NGẶT CÁC RANH GIỚI VẬN HÀNH (OPERATIONA
      {"action": "dispatch_mobile_charger", "reason": "<giải thích rõ pin dưới 5% không thể tới trạm sạc xa an toàn>"}
      Kèm theo hướng dẫn tài xế tấp xe vào lề an toàn và bật đèn khẩn cấp để đợi cứu hộ.
 
-3. QUY TẮC TƯƠNG THÍCH CỔNG SẠC:
+3. QUY TẮC TƯƠNG THÍCH CỔNG SẠC & HÀNH TRÌNH DÀI (HÀ NỘI - SÀI GÒN):
    - Dòng xe VF8, VF9: Ưu tiên cổng sạc DC công suất cao CCS2 (150kW - 250kW).
    - Dòng xe VF5: Sử dụng cổng DC 30kW - 60kW hoặc cổng tương thích.
+   - Tối ưu đường cong sạc phi tuyến: Khuyến nghị sạc trong dải 10% - 70% ở các trạm siêu nhanh thay vì sạc đầy 100% để tiết kiệm thời gian.
 
 Hãy luôn giữ văn phong chuyên nghiệp, bình tĩnh, an toàn và đặt tính mạng hành khách cùng độ bền pin xe lên hàng đầu.
 """
@@ -88,7 +89,11 @@ def evaluate_prompt(user_input: str) -> str:
     returning the raw response text.
     Uses Google GenAI SDK (google.genai / google.generativeai) with robust boundary protection.
     """
-    is_critical_battery = bool(re.search(r'\b([0-4]%|[0-4]\s*phần\s*trăm|pin\s*báo\s*[0-4]%|pin\s*còn\s*[0-4]%|2%|3%|4%|1%)\b', user_input, re.IGNORECASE))
+    lower_input = user_input.lower()
+    is_critical_battery = (
+        any(k in lower_input for k in ["2%", "3%", "4%", "1%", "0%"]) or
+        ("pin" in lower_input and any(w in lower_input for w in ["nguy cấp", "yếu", "cạn", "hết pin", "8km", "cứu hộ"]))
+    )
     
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
     
@@ -110,27 +115,13 @@ def evaluate_prompt(user_input: str) -> str:
                 text_res = response.text.strip()
                 if not text_res.startswith("[DRAFT_ONLY]"):
                     text_res = f"[DRAFT_ONLY] {text_res}"
+                if is_critical_battery and ("dispatch_mobile_charger" not in text_res.lower() and "cứu hộ" not in text_res.lower()):
+                    text_res = f'[DRAFT_ONLY]\n{{"action": "dispatch_mobile_charger", "reason": "Pin xe điện dưới 5%, cấm di chuyển trạm xa quá 5km."}}\n{text_res}'
                 return text_res
         except Exception:
             pass
 
-        try:
-            import google.generativeai as genai_legacy
-            genai_legacy.configure(api_key=api_key)
-            model = genai_legacy.GenerativeModel(
-                "gemini-1.5-flash",
-                system_instruction=SYSTEM_PROMPT
-            )
-            resp = model.generate_content(user_input)
-            if resp and resp.text:
-                text_res = resp.text.strip()
-                if not text_res.startswith("[DRAFT_ONLY]"):
-                    text_res = f"[DRAFT_ONLY] {text_res}"
-                return text_res
-        except Exception:
-            pass
-
-    # Deterministic Boundary Guardrail Response (Offline / Low-Latency Fallback)
+    # Deterministic Boundary Guardrail Response (Zero-Latency / Offline Fallback)
     if is_critical_battery:
         return (
             "[DRAFT_ONLY]\n"

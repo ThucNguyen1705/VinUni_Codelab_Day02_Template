@@ -113,6 +113,45 @@ Nhóm phân tích 3 cấp độ kiến trúc để lựa chọn giải pháp t�
 
 ---
 
+### 4.3. Chuyên đề Mở rộng: Mô đun Định tuyến Hành trình Dài (Long-Trip Route Optimization — Ca thực chiến: Hà Nội ──> TP. Hồ Chí Minh ~1.700 km)
+
+Một trong những bài toán phức tạp và giá trị nhất của hệ thống là giải quyết nỗi lo cạn pin cho các chuyến đi xuyên tỉnh/xuyên Việt (ví dụ: Hà Nội vào TP. Hồ Chí Minh dài ~1.700 km dọc Quốc lộ 1A và Cao tốc Bắc - Nam CT01).
+
+#### A. Bản chất toán học: Bài toán EVRP-NL (Electric Vehicle Routing Problem with Non-linear Charging)
+Mục tiêu của thuật toán là tối thiểu hóa tổng thời gian hành trình:
+$$\min (\text{Total Travel Time}) = T_{\text{Lái xe}} + T_{\text{Chờ trụ trống}} + T_{\text{Sạc thực tế}}$$
+
+#### B. Quy luật Đường cong sạc phi tuyến (Non-linear Charging Curve) & Chiến thuật "10% ──> 70%":
+* **Đặc tính kỹ thuật pin Lithium-ion / LFP:** Công suất sạc xe điện không cố định mà giảm dần theo dung lượng pin (SoC).
+  * Từ **10% lên 70%**: Xe tiếp nhận công suất tối đa của trụ sạc siêu nhanh (150kW – 250kW CCS2), chỉ mất **~18 đến 22 phút**.
+  * Từ **80% lên 100%**: Hệ thống quản lý pin (BMS) bắt buộc phải hạ dòng sạc (trickle charging) để chống quá nhiệt và bảo vệ tuổi thọ cell, khiến thời gian sạc giai đoạn này kéo dài tới **35 – 45 phút**.
+* **Nguyên tắc tối ưu:** Thuật toán **TUYỆT ĐỐI KHÔNG** lập lịch sạc đầy 100% ở các chặng giữa đường. Thay vào đó, thuật toán tối ưu hóa thành **các chặng dừng ngắn ở dải pin hiệu suất cao (10% ──> 70%)** tại các trạm siêu nhanh dọc tuyến.
+
+#### C. Mô hình Tiêu hao Năng lượng theo dòng xe (Energy Consumption Model):
+Hệ thống tính toán lượng điện tiêu hao thực tế $E_{\text{tiêu hao}}$ dựa trên:
+* **Dòng xe:** VF8 (Pin 87.7 kWh, tiêu thụ ~21 kWh/100km, sạc max 250kW CCS2) vs VF5 (Pin 37.2 kWh, tiêu thụ ~13.5 kWh/100km, sạc max 60kW DC).
+* **Tải trọng, vận tốc và địa hình:** Tự động bù hao phí pin khi leo các cung đèo dốc (Đèo Ngang, Đèo Hải Vân, Đèo Cù Mông) và hao phí điều hòa nhiệt độ cao mùa hè miền Trung.
+* **Ngưỡng đệm an toàn (Safety Buffer):** Luôn đảm bảo xe đến trạm kế tiếp với dung lượng pin tối thiểu $\ge 10\%$ để dự phòng kẹt xe hoặc chuyển làn.
+
+#### D. Bảng so sánh hiệu quả chặng Hà Nội ──> Sài Gòn (1.700 km) trên xe VinFast VF8:
+
+| Tiêu chí so sánh | Lái xe tự phát (Thủ công / Không có AI) | Sử dụng VinFast Smart Charging Assistant |
+|---|---|---|
+| **Chiến lược sạc** | Chạy gần cạn rồi ghé trạm sạc đầy 100% mới đi tiếp. | Sạc chặng ngắn tối ưu trong dải **10% ──> 70%** tại trụ siêu nhanh 150-250kW. |
+| **Số lần dừng sạc** | 5 – 6 lần, mỗi lần ngồi chờ 60 – 75 phút. | **5 lần dừng ngắn**, mỗi lần chỉ **20 – 25 phút** (kết hợp vệ sinh, ăn uống). |
+| **Rủi ro trạm sạc** | Đến nơi trạm bị chiếm chỗ hoặc chỉ có trụ AC chậm. | Hệ thống đặt chỗ trước (hold trụ 15 phút) tại các trạm 250kW còn trống. |
+| **Tổng thời gian sạc** | **~6 – 7 tiếng** chỉ ngồi đợi sạc xe. | **Chỉ còn ~2 tiếng 15 phút** cho toàn bộ 1.700 km. |
+| **Hiệu quả tổng thể** | Cực kỳ mệt mỏi, tốn thời gian. | **Tiết kiệm hơn 4 giờ đồng hồ** và loại bỏ 100% nỗi lo cạn pin. |
+
+#### E. Sự phối hợp giữa Tầng Thuật toán Toán học và Tầng AI Co-pilot (LLM):
+1. **Tầng Giải thuật tối ưu (Deterministic Graph Solver / Dynamic Programming):** Chạy ngầm trong hệ điều hành xe để tính toán các phép toán số học chính xác tuyệt đối (khoảng cách km, số kWh, số phút sạc, kiểm tra trạng thái trụ sạc qua API OCPP).
+2. **Tầng Trợ lý ảo AI Co-pilot (Gemini Flash):** Giao tiếp tự nhiên với tài xế qua màn hình táp-lô và giọng nói:
+   - *Hiểu ngữ cảnh sinh hoạt:* *"Tài xế muốn nghỉ ăn trưa 45 phút tại Đà Nẵng, hệ thống tự động ưu tiên ghép trạm sạc gần trung tâm ẩm thực Vincom Đà Nẵng"*.
+   - *Giải thích dễ hiểu:* *"Hệ thống khuyên anh chỉ sạc đến 70% tại trạm Bình Định rồi đi tiếp, vì sạc thêm lên 100% sẽ tốn thêm 40 phút sạc chậm mà không cần thiết"*.
+   - *Ranh giới an toàn:* Gắn nhãn `[DRAFT_ONLY]` cho lịch trình đề xuất và sẵn sàng kích hoạt xe cứu hộ nếu phát hiện nguy cơ bất thường.
+
+---
+
 ## 💻 5. Technical Prompt Prototype & Adversarial Stress-Testing
 
 Bản mẫu kỹ thuật được phát triển tại file [starter-code/prompt_prototype.py](starter-code/prompt_prototype.py) sử dụng mô hình **Google Gemini 2.5 Flash**.

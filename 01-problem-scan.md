@@ -43,7 +43,8 @@ Chọn Top 3 bài toán từ Phase 1 để đánh giá sơ bộ độ khả thi:
 │ QUICK PROBLEM CARD #1                                                           │
 │                                                                                 │
 │ Bài toán (1 câu): Tài xế xe điện VinFast (VF5, VF8, VF9) cần trợ lý tự động đề   │
-│ xuất lộ trình và trạm sạc còn trụ trống, đúng chuẩn cổng (CCS2/GBT) theo SoC.   │
+│ xuất lộ trình và trạm sạc còn trụ trống, đúng chuẩn cổng (CCS2/GBT) theo SoC,    │
+│ tối ưu hóa số lần sạc và thời gian cho cả di chuyển đô thị lẫn xuyên Việt.       │
 │                                                                                 │
 │ Công ty thành viên: [x] VinFast   [ ] Xanh SM   [ ] Vinhomes                    │
 │                     [ ] Vinmec    [ ] Khác ___________________                  │
@@ -51,7 +52,7 @@ Chọn Top 3 bài toán từ Phase 1 để đánh giá sơ bộ độ khả thi:
 │ Ai đang đau (Actor)? Tài xế xe điện VinFast, Điều phối viên kỹ thuật trạm sạc    │
 │                                                                                 │
 │ Workflow thủ công hiện tại (5 bước):                                            │
-│   1. Tài xế thấy xe báo pin yếu (< 20%) trên màn hình táp-lô                    │
+│   1. Tài xế thấy xe báo pin yếu (< 20%) hoặc chuẩn bị đi đường dài (HN - SG)   │
 │   ──> 2. Mở App VinFast/Google Maps tìm các trạm sạc xung quanh bán kính        │
 │   ──> 3. Tự lọc thủ công trạm có cổng CCS2/GBT và còn trụ khả dụng             │
 │   ──> 4. Lái xe đến trạm (thường xuyên gặp trạm đã kín chỗ hoặc đang bảo trì)   │
@@ -61,14 +62,15 @@ Chọn Top 3 bài toán từ Phase 1 để đánh giá sơ bộ độ khả thi:
 │                                                                                 │
 │ AI có thể can thiệp ở bước nào? Bước 2, 3 & 4                                   │
 │ (AI tự động trích xuất SoC, vị trí GPS, dòng xe -> Tra cứu API trạm sạc real-   │
-│  time -> Soạn bản nháp lộ trình sạc tối ưu kèm cổng sạc chính xác cho tài xế)   │
+│  time -> Định tuyến tối ưu đường cong sạc 10%-70% -> Soạn bản nháp lộ trình)    │
 │                                                                                 │
 │ Thước đo thành công (Metric có số):                                             │
 │   - Giảm thời gian tìm và xác nhận trạm sạc từ 18 phút ──> dưới 2 phút.          │
+│   - Tiết kiệm > 4 giờ sạc cho hành trình dài xuyên Việt Hà Nội - TP.HCM.         │
 │   - Tỷ lệ gợi ý trạm sạc chính xác chuẩn cổng (CCS2/GBT) và còn trụ trống: >= 98%│
 │   - Tỷ lệ sự cố cạn kiệt pin giữa đường cần xe sạc lưu động cứu hộ: giảm 85%.   │
 │                                                                                 │
-│ Quick Architecture: [x] LLM Feature kết hợp Rule-based Constraint Engine        │
+│ Quick Architecture: [x] LLM Feature kết hợp Deterministic Route Solver (EVRP)   │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
