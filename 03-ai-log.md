@@ -37,6 +37,10 @@ Tôi đã phân chia quá trình làm việc thành 4 phiên tương tác chính
 - Nhờ AI phân tích đường cong sạc phi tuyến (Non-linear Charging Curve) của pin LFP/NMC, tôi hiểu rằng sạc từ 10% đến 70% chỉ mất ~20 phút tại trụ DC 250kW, trong khi từ 80% lên 100% mất tới 40 phút vì pin hạ dòng trickle charging.
 - AI đã cùng tôi mô hình hóa bảng so sánh thực tế: Thay vì 5-6 lần sạc 100% mất 7 tiếng ngồi chờ, thuật toán sẽ chia thành 5 chặng sạc ngắn dải 10% ──> 70%, giảm tổng thời gian sạc xuống chỉ còn **2 tiếng 15 phút** (tiết kiệm hơn 4 tiếng đồng hồ). Đây là điểm nhấn quan trọng nhất giúp báo cáo Deep-Dive đạt chất lượng vượt trội.
 
+### 2.4. Cô đọng bài toán về bản chất cốt lõi: Đi từ A đến B nhanh nhất (Fastest A ──> B):
+- Trong quá trình thiết kế, tôi nhận ra không nên phức tạp hóa sản phẩm bằng các kịch bản ngoại lệ cứu hộ, mà phải giải quyết bài toán lớn nhất của 99% người dùng hằng ngày: **"Tôi muốn đi từ A đến B, hệ thống phải chỉ tôi đi đường nào và dừng sạc ở đâu nhanh nhất?"**.
+- AI đã giúp tôi làm rõ 3 tiêu chuẩn vàng khi chọn trạm sạc: (1) Đường vòng detour $< 3$ km, (2) Công suất trụ sạc cao nhất phù hợp dòng xe (150-250kW cho VF8/VF9), và (3) Trụ sạc còn trống thực tế qua API OCPP.
+
 ---
 
 ## ⚠️ 3. Những sai lầm, ảo giác của AI và cách tôi đã phát hiện (Hallucinations & Failures)
